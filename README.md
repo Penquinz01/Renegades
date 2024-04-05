@@ -7,7 +7,7 @@
 Renegades 
 
 # Team Member
-Abhinav KP 
+Abhinav KP https://github.com/rxzjerry
 
 Janbaas Jamal K k  https://github.com/Penquinz01
 
