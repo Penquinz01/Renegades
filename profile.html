@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #userDetails {
+      background-color: #f2f2f2;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+
+    #userDetails p {
+      margin: 10px 0;
+    }
+
+    button {
+      margin-top: 20px;
+    }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+
+  <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBrjqkKK70PHNRrEFLz6aYRtFwFSpqOe1M",
+      authDomain: "hostelpayment-d4051.firebaseapp.com",
+      projectId: "hostelpayment-d4051",
+      storageBucket: "hostelpayment-d4051.appspot.com",
+      messagingSenderId: "1023501459060",
+      appId: "1:1023501459060:web:69257a360e921210587b21",
+      measurementId: "G-SYTDE0FHC3"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Get the document name from the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const docName = urlParams.get('docName');
+
+    // Fetch the user data from Firestore
+    var db = firebase.firestore();
+    db.collection("user_registrations").doc(docName).get()
+      .then(function(doc) {
+        if (doc.exists) {
+          var userData = doc.data();
+          document.getElementById('email').textContent = userData.email;
+          document.getElementById('name').textContent = userData.name;
+          document.getElementById('hostelName').textContent = userData.hostelName;
+          document.getElementById('userType').textContent = userData.userType;
+          if (userData.yearOfStudy) {
+            document.getElementById('yearOfStudy').textContent = userData.yearOfStudy;
+          } else {
+            document.getElementById('yearOfStudy').parentElement.style.display = 'none';
+          }
+
+          // Display different options based on user type
+          var buttonContainer = document.getElementById('buttonContainer');
+          if (userData.userType === 'owner') {
+            var requestPaymentButton = document.createElement('button');
+            requestPaymentButton.textContent = 'Request Payment';
+            requestPaymentButton.addEventListener('click', function() {
+              // Redirect to success page
+              window.location.href = 'success.html';
+            });
+            buttonContainer.appendChild(requestPaymentButton);
+          } else if (userData.userType === 'student') {
+            var makePaymentButton = document.createElement('button');
+            makePaymentButton.textContent = 'Make Payment';
+            makePaymentButton.addEventListener('click', function() {
+              // Redirect to success page
+              window.location.href = 'success.html';
+            });
+            buttonContainer.appendChild(makePaymentButton);
+          }
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+  </script>
+</head>
+<body>
+  <div id="userDetails">
+    <h1>User Profile</h1>
+    <p>Email: <span id="email"></span></p>
+    <p>Name: <span id="name"></span></p>
+    <p>Hostel Name: <span id="hostelName"></span></p>
+    <p>User Type: <span id="userType"></span></p>
+    <p>Year of Study: <span id="yearOfStudy"></span></p>
+    <div id="buttonContainer"></div>
+  </div>
+</body>
+</html>

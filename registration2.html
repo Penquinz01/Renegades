@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration (Page 2)</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    form {
+      text-align: center;
+    }
+    input, select {
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+  </style>
+
+  <!-- Add Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+
+  <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+
+apiKey: "AIzaSyBrjqkKK70PHNRrEFLz6aYRtFwFSpqOe1M",
+
+authDomain: "hostelpayment-d4051.firebaseapp.com",
+
+projectId: "hostelpayment-d4051",
+
+storageBucket: "hostelpayment-d4051.appspot.com",
+
+messagingSenderId: "1023501459060",
+
+appId: "1:1023501459060:web:4da228dcda075f8e587b21",
+
+measurementId: "G-BRF7GHCYQL"
+
+};
+
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Function to handle form submission
+    function submitForm() {
+      var email = document.getElementById('email').value;
+      var name = document.getElementById('name').value;
+      var hostelName = document.getElementById('hostelName').value;
+      var yearOfStudy = document.getElementById('yearOfStudy').value;
+      var userType = document.getElementById('userType').value;
+
+      // Prepare data object
+      var userData = {
+        email: email,
+        name: name,
+        hostelName: hostelName,
+        userType: userType
+      };
+
+      // If the user is a student, add year of study to userData
+      if (userType === 'student') {
+        userData.yearOfStudy = yearOfStudy;
+      }
+
+      // Add data to Firestore
+      var db = firebase.firestore();
+      db.collection("user_registrations").add(userData)
+        .then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+          // Redirect to profile page after registration
+          window.location.href = `profile.html?docName=${docRef.id}`;
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+          // Handle error
+        });
+    }
+  </script>
+</head>
+<body>
+  <form>
+    <h1>User Registration (Page 2)</h1>
+    <input type="email" id="email" placeholder="Email"><br>
+    <input type="text" id="name" placeholder="Full Name"><br>
+    <input type="text" id="hostelName" placeholder="Hostel Name"><br>
+    <select id="userType" onchange="toggleYearOfStudy()">
+      <option value="owner">Owner</option>
+      <option value="student">Student</option>
+    </select><br>
+    <input type="number" id="yearOfStudy" placeholder="Year of Study" style="display: none;"><br>
+    <button type="button" onclick="submitForm()">Register</button>
+  </form>
+
+  <script>
+    // Function to toggle visibility of year of study input based on user type
+    function toggleYearOfStudy() {
+      var userType = document.getElementById('userType').value;
+      var yearOfStudyInput = document.getElementById('yearOfStudy');
+      if (userType === 'student') {
+        yearOfStudyInput.style.display = 'block';
+      } else {
+        yearOfStudyInput.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html> 

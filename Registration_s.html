@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    form {
+      text-align: center;
+    }
+    input {
+      border-radius:5px;
+      margin-bottom: 20px;
+    }
+  </style>
+  <!-- Add Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+  <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+
+apiKey: "AIzaSyBrjqkKK70PHNRrEFLz6aYRtFwFSpqOe1M",
+
+authDomain: "hostelpayment-d4051.firebaseapp.com",
+
+projectId: "hostelpayment-d4051",
+
+storageBucket: "hostelpayment-d4051.appspot.com",
+
+messagingSenderId: "1023501459060",
+
+appId: "1:1023501459060:web:69257a360e921210587b21",
+
+measurementId: "G-SYTDE0FHC3"
+
+};
+
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Function to handle user registration
+    function registerUser() {
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var phoneNumber = document.getElementById('phoneNumber').value;
+      var password = document.getElementById('password').value;
+
+      // Create user with email and password
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Update user profile with name
+          userCredential.user.updateProfile({
+            displayName: name
+          });
+          // You can redirect or do anything after successful registration
+          window.location.href="registration2.html";
+          console.log("User registered successfully:", userCredential.user);
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.error(errorMessage);
+          // Handle errors, display messages to users, etc.
+        });
+    }
+  </script>
+</head>
+<body>
+  <form>
+    <h1>User Registration</h1>
+    <input type="text" id="name" placeholder="Full Name"><br>
+    <input type="email" id="email" placeholder="Email"><br>
+    <input type="tel" id="phoneNumber" placeholder="Phone Number"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button type="button" onclick="registerUser()">Register</button>
+  </form>
+</body>
+</html>
