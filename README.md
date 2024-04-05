@@ -29,7 +29,9 @@ Library Name - Version
 Instructions for setting up project
 
 ## How to Run
-Instructions for running
+Login function isnt working properly
+click on registration adn fill in the details and click on registration again and fill in the rest of the details,
+now an option to pay or request the fee of hostel will be shown depending on wheather you are owner of an hostel or student
 
 ## How to contribute ? 
 Features to implement 
