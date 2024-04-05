@@ -4,18 +4,18 @@
 
 
 ## Team Name
-Name  
+Renegades 
 
 # Team Member
-Member 1 Github Link
+Abhinav KP 
 
-MEmber 2 Github Link
+Janbaas Jamal K k  https://github.com/Penquinz01
 
 ## Idea
-Breif Idea in two three sentences 
+Hostel Fee Payment portal
 
 ## Features 
-1. 
+1. Hostel fee portal for all hostels around Cet including MH and LH
 
 ## Link to product walkthrough
 [link to video](Link Here)
